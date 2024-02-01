@@ -49,6 +49,7 @@ return {
 				diagnostics.golangci_lint,
 				formatting.gofumpt,
 				formatting.goimports,
+				formatting.yamlfix,
 				formatting.golines,
 				diagnostics.eslint_d.with({ -- js/ts linter
 					condition = function(utils)

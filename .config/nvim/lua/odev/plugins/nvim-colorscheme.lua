@@ -1,8 +1,13 @@
 return {
-	"bluz71/vim-nightfly-colors",
-	name = "nightfly",
-	priority = 1000,
-	config = function()
-		vim.cmd([[colorscheme nightfly]])
-	end,
+	{
+		"craftzdog/solarized-osaka.nvim",
+		lazy = false,
+		priority = 1000,
+		opts = function()
+			vim.cmd([[colorscheme solarized-osaka]])
+			return {
+				transparent = true,
+			}
+		end,
+	},
 }

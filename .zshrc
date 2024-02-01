@@ -20,9 +20,10 @@ alias ..="cd .."
 alias ....="cd ../.."
 alias ......="cd ../../.."
 alias c="clear"
+alias lc="vim leetcode.nvim"
 
 # python
-alias p="python"
+alias p="python3"
 
 # zshrc
 alias zshrc="vim ~/.zshrc"
@@ -36,6 +37,7 @@ alias bu="brew update"
 # application
 alias spotify="open /Applications/Spotify.app"
 alias notion="open /Applications/Notion.app"
+alias postman="open /Applications/Postman.app"
 
 # git
 alias gcu="git config --global user.name"

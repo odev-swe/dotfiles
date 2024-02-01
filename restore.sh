@@ -1,10 +1,11 @@
 #!/bin/bash
+# inspired by PScoriae
 if ! command -v brew &> /dev/null; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
 # List of common developer tools
-tools=("nvm" "neovim" "hugo" "gh" "hashicorp/tap/terraform")
+tools=("nvm" "neovim" "hugo" "gh" "hashicorp/tap/terraform" "git" "go" "ripgrep")
 
 # List of zsh stuff
 zshStuff=("zsh-completions" "zsh-autosuggestions" "zsh-syntax-highlighting" "powerlevel10k" "font-hack-nerd-font" "jq")

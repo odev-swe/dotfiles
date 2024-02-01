@@ -30,3 +30,6 @@ keymap.set("n", "<leader>se", "<C-w>=") -- make split windows equal width & heig
 keymap.set("n", "<leader>sx", ":close<CR>") -- close current split window
 
 -- plugin key bind
+keymap.set("n", "<leader>lcc", ":Leet console<CR>")
+keymap.set("n", "<leader>lct", ":Leet test<CR>")
+keymap.set("n", "<leader>lcr", ":Leet run<CR>")

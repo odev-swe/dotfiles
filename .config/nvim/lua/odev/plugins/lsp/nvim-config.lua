@@ -10,6 +10,8 @@ return {
 		-- import lspconfig plugin
 		local lspconfig = require("lspconfig")
 
+		local lsp_setting = require("odev.setting.yaml")
+
 		-- import cmp-nvim-lsp plugin
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
@@ -103,7 +105,7 @@ return {
 					},
 					experimentalPostfixCompletions = true,
 					gofumpt = true,
-					usePlaceholders = true,
+					usePlaceholders = false,
 					hints = {
 						assignVariableTypes = true,
 						compositeLiteralFields = true,
@@ -120,6 +122,14 @@ return {
 		lspconfig["pyright"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
+		})
+
+		lspconfig["yamlls"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+			settings = {
+				yaml = lsp_setting,
+			},
 		})
 
 		-- configure lua server (with special settings)
