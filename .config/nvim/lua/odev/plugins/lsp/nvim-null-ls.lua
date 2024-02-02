@@ -1,9 +1,7 @@
 return {
 	"nvimtools/none-ls.nvim", -- configure formatters & linters
 	event = { "BufReadPre", "BufNewFile" }, -- to enable uncomment this
-	dependencies = {
-		"jay-babu/mason-null-ls.nvim",
-	},
+	dependencies = { "jay-babu/mason-null-ls.nvim" },
 	config = function()
 		local mason_null_ls = require("mason-null-ls")
 
@@ -51,6 +49,8 @@ return {
 				formatting.goimports,
 				formatting.yamlfix,
 				formatting.golines,
+				diagnostics.yamllint,
+				formatting.clang_format,
 				diagnostics.eslint_d.with({ -- js/ts linter
 					condition = function(utils)
 						return utils.root_has_file({ ".eslintrc.js", ".eslintrc.cjs" }) -- only enable if root has .eslintrc.js or .eslintrc.cjs

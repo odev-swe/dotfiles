@@ -132,6 +132,15 @@ return {
 			},
 		})
 
+		lspconfig["clangd"].setup({
+			on_attach = on_attach,
+			capabilities = capabilities,
+			cmd = {
+				"clangd",
+				"--offset-encoding=utf-16",
+			},
+		})
+
 		-- configure lua server (with special settings)
 		lspconfig["lua_ls"].setup({
 			capabilities = capabilities,
