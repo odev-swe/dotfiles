@@ -5,13 +5,13 @@ if ! command -v brew &> /dev/null; then
 fi
 
 # List of common developer tools
-tools=("nvm" "neovim" "hugo" "gh" "hashicorp/tap/terraform" "git" "go" "ripgrep")
+tools=("nvm" "neovim" "hugo" "gh" "hashicorp/tap/terraform" "git" "go" "ripgrep" "lazygit" "minikube" "awscli")
 
 # List of zsh stuff
 zshStuff=("zsh-completions" "zsh-autosuggestions" "zsh-syntax-highlighting" "powerlevel10k" "font-hack-nerd-font" "jq")
 
 # List of casks
-casks=("github" "iterm2" "postman" "tailscale" "visual-studio-code" "sf-symbols")
+casks=("github" "iterm2" "postman" "tailscale" "visual-studio-code" "sf-symbols" "font-hack-nerd-font" "notion")
 
 # List of formulae
 formulae=("homebrew/cask-fonts" "hashicorp/tap")
