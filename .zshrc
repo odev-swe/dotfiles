@@ -42,6 +42,7 @@ alias postman="open /Applications/Postman.app"
 # git
 alias gcu="git config --global user.name"
 alias gce="git config --global user.email"
+alias gca="git config --list --show-origin"
 
 # terraform
 alias tff="terraform fmt"

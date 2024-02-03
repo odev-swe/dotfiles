@@ -34,5 +34,6 @@ keymap.set("n", "<leader>lcc", ":Leet console<CR>")
 keymap.set("n", "<leader>lct", ":Leet test<CR>")
 keymap.set("n", "<leader>lcr", ":Leet run<CR>")
 
--- run
+-- run python or c++ code
 keymap.set("n", "<leader>rr", ":!g++ -Wall % && ./a.out<cr>")
+keymap.set("n", "<leader>rp", ":!python3 %<cr>")
