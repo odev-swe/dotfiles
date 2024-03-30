@@ -25,6 +25,9 @@ alias lc="vim leetcode.nvim"
 # python
 alias p="python3"
 
+# air
+alias air='$(go env GOPATH)/bin/air'
+
 # zshrc
 alias zshrc="vim ~/.zshrc"
 alias zshrcs="source ~/.zshrc"
@@ -50,6 +53,7 @@ alias tfi="terraform init"
 alias tfa="terraform apply"
 
 export PATH="/usr/local/bin:$PATH"
+export PATH=$HOME/flutter/bin:$PATH
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -62,3 +66,7 @@ export NVM_DIR="$HOME/.nvm"
 # terraform autocomplete
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/bin/terraform terraform
+
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)

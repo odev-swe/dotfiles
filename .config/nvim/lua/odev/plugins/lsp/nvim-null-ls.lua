@@ -15,7 +15,6 @@ return {
 				"stylua", -- lua formatter
 				"black", -- python formatter
 				"pylint", -- python linter
-				"eslint_d", -- js linter
 				"gofumpt", -- go formatter
 				"golangci-lint", -- go linter
 				"goimports", -- go formatter
@@ -41,21 +40,16 @@ return {
 				--  "formatting.prettier.with({disabled_filetypes: {}})" (see null-ls docs)
 				formatting.stylua, -- lua formatter
 				formatting.isort,
-				formatting.autopep8,
 				formatting.black,
 				diagnostics.pylint,
 				diagnostics.golangci_lint,
 				formatting.gofumpt,
 				formatting.goimports,
 				formatting.yamlfix,
+				formatting.prettier,
 				formatting.golines,
 				diagnostics.yamllint,
 				formatting.clang_format,
-				diagnostics.eslint_d.with({ -- js/ts linter
-					condition = function(utils)
-						return utils.root_has_file({ ".eslintrc.js", ".eslintrc.cjs" }) -- only enable if root has .eslintrc.js or .eslintrc.cjs
-					end,
-				}),
 			},
 			-- configure format on save
 			on_attach = function(current_client, bufnr)

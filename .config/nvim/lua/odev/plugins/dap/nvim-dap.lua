@@ -3,6 +3,7 @@ return {
 	dependencies = {
 		"rcarriga/nvim-dap-ui",
 		"mxsdev/nvim-dap-vscode-js",
+		"nvim-neotest/nvim-nio",
 	},
 	config = function()
 		local dap, dapui = require("dap"), require("dapui")
@@ -91,7 +92,8 @@ return {
 				type = "delve",
 				name = "Debug",
 				request = "launch",
-				program = "${file}",
+				program = "${workspaceFolder}/cmd/teamat/...",
+				args = { "debug" },
 			},
 			{
 				type = "delve",

@@ -12,7 +12,7 @@ keymap.set("n", "<leader>nh", ":nohl<CR>")
 
 -- delete single character without copying into register
 keymap.set("n", "x", '"_x') -- delete single alphabet
-keymap.set("n", "gts", "0")
+keymap.set("n", "gts", "^")
 keymap.set("n", "gte", "%")
 
 -- increment/decrement numbers
@@ -33,7 +33,15 @@ keymap.set("n", "<leader>sx", ":close<CR>") -- close current split window
 keymap.set("n", "<leader>lcc", ":Leet console<CR>")
 keymap.set("n", "<leader>lct", ":Leet test<CR>")
 keymap.set("n", "<leader>lcr", ":Leet run<CR>")
+keymap.set("n", "<leader>lcs", ":Leet submit<CR>")
+
+-- accept copilot suggestion
+keymap.set("i", "caa", 'copilot#Accept("\\<CR>")', { expr = true, replace_keycodes = false })
+
+-- save file
+keymap.set("n", "<leader>w", ":wa<CR>")
 
 -- run python or c++ code
 keymap.set("n", "<leader>rr", ":!g++ -Wall % && ./a.out<cr>")
 keymap.set("n", "<leader>rp", ":!python3 %<cr>")
+keymap.set("n", "<leader>rj", ":!java %:p<cr>")

@@ -20,7 +20,7 @@ return {
 			},
 		},
 		storage = {
-			home = "~/Documents/github/roadtofanng/leetcode",
+			home = "~/Documents/github/road2maang/leetcode",
 			cache = vim.fn.stdpath("cache") .. "/leetcode",
 		},
 	},
