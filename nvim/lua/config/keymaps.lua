@@ -49,8 +49,8 @@ map("n", "<Left>", ":bprevious<CR>", opts)
 -- window management
 map("n", "<C-h>", "<C-w><Left>") -- move to left screen
 map("n", "<C-l>", "<C-w><Right>") -- move to right screen
-map("n", "<C-j>", "<C-w><Up>") -- move to up screen
-map("n", "<C-k>", "<C-w><Down>") -- move to down screen
+map("n", "<C-k>", "<C-w><Up>") -- move to up screen
+map("n", "<C-j>", "<C-w><Down>") -- move to down screen
 map("n", "<Leader>sv", "<C-w>v") -- split window vertically
 map("n", "<Leader>sh", "<C-w>s") -- split window horizontally
 map("n", "<Leader>se", "<C-w>=") -- make split windows equal width & height
