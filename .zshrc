@@ -4,6 +4,9 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     source /home/linuxbrew/.linuxbrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
     source /home/linuxbrew/.linuxbrew/opt/z/etc/profile.d/
 elif [[ "$OSTYPE" == "darwin"* ]]; then
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${USER}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${USER}.zsh"
+fi
     source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
     source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
     source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
