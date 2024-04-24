@@ -34,7 +34,7 @@ fi
 echo "Homebrew formulae section..."
 
 # List of Homebrew packages to install
-formulae=(git go nvm ripgrep gh nvim)
+formulae=("git" "go" "nvm" "ripgrep" "gh" "nvim")
 
 # List of Zsh-related packages
 zshStuff=("zsh-completions" "zsh-autosuggestions" "zsh-syntax-highlighting" "powerlevel10k" "font-hack-nerd-font" "jq" "z")
