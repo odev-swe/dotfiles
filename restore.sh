@@ -37,8 +37,7 @@ echo "Homebrew formulae section..."
 formulae=(git go nvm ripgrep gh nvim)
 
 # List of Zsh-related packages
-zshStuff=("zsh-completions" "zsh-autosuggestions" "zsh-syntax-highlighting" "powerlevel10k" "font-ha
-rm -rf ~/temp/ck-nerd-font" "jq" "z")
+zshStuff=("zsh-completions" "zsh-autosuggestions" "zsh-syntax-highlighting" "powerlevel10k" "font-hack-nerd-font" "jq" "z")
 
 for formulae in "${formulae[@]}"; do
   brew install "$formulae"
