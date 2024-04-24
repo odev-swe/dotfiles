@@ -26,7 +26,7 @@ return {
           -- "terraform_fmt", -- terraform formatter
           -- "terraform_validate", -- terraform linter
           "shellcheck", -- shell linter
-          "yamllint", -- yaml linter
+          -- "yamllint", -- yaml linter
           -- "buf", -- buf formatter
           "shfmt", -- shell formatter
           -- "gofumpt", -- go formatter
