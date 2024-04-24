@@ -6,10 +6,17 @@ fi
 
 
 # zsh plugins
-source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /opt/homebrew/etc/profile.d/z.sh
+# check if linux or mac
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    source /home/linuxbrew/.linuxbrew/opt/zsh-autosuggestions/zsh-autosuggestions.zsh
+    source /home/linuxbrew/.linuxbrew/opt/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    source /home/linuxbrew/.linuxbrew/opt/z/etc/profile.d/
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+    source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+    source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    source /opt/homebrew/etc/profile.d/
+fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh. [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
