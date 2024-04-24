@@ -1,2 +1,6 @@
+echo "Backing up dotfiles..."
+
 cp ~/.zshrc .
-rsync -av --exclude="iterm2" --exclude="gh" --exclude="fish" --exclude="iterm2" ~/.config/ ./.config/
+rsync -av --exclude="iterm2" --exclude="gh" --exclude="fish" ~/.config/ .
+
+echo "Backed up dotfiles!"

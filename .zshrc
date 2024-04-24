@@ -66,7 +66,3 @@ export NVM_DIR="$HOME/.nvm"
 # terraform autocomplete
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/bin/terraform terraform
-
-
-# Load Angular CLI autocompletion.
-source <(ng completion script)

@@ -1,40 +1,46 @@
 #!/bin/bash
-# inspired by PScoriae
-if ! command -v brew &> /dev/null; then
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+echo "Homebrew section..."
+
+if command -v brew &>/dev/null; then
+    echo "Homebrew is installed"
+else
+    echo "Homebrew is not installed. Installing..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-# List of common developer tools
-tools=("nvm" "neovim" "hugo" "gh" "hashicorp/tap/terraform" "git" "go" "ripgrep" "lazygit" "minikube" "awscli")
 
-# List of zsh stuff
-zshStuff=("zsh-completions" "zsh-autosuggestions" "zsh-syntax-highlighting" "powerlevel10k" "font-hack-nerd-font" "jq")
+echo "Homebrew formulae section..."
 
-# List of casks
-casks=("github" "iterm2" "postman" "tailscale" "visual-studio-code" "sf-symbols" "font-hack-nerd-font" "notion")
+formulae=(git go nvm ripgrep gh nvim)
 
-# List of formulae
-formulae=("homebrew/cask-fonts" "hashicorp/tap")
+zshStuff=("zsh-completions" "zsh-autosuggestions" "zsh-syntax-highlighting" "powerlevel10k" "font-hack-nerd-font" "jq" "z")
 
-# Install formulae
 for formulae in "${formulae[@]}"; do
-  brew tap "$formulae"
+  brew install "$formulae"
 done
 
-
-# Install common developer tools
-for tool in "${tools[@]}"; do
-  brew install "$tool"
-done
-
-# Install zsh stuff
 for zsh in "${zshStuff[@]}"; do
   brew install "$zsh"
 done
 
-# Install casks
-for cask in "${casks[@]}"; do
-  brew install --cask "$cask"
-done
+echo "Clone dotfiles section..."
+
+if [ -f ~/temp/ ]; then 
+    rm -rf ~/temp/
+    git clone https://github.com/odev-swe/dotfiles.git ~/temp/
+fi
+
+echo "Copy dotfiles to machines..."
+
+cp ~/temp/.zshrc ~
+cp ~/temp/.tmux.conf ~
+cp -r ~/temp/.config/nvim/ ~/.config/nvim
+
+echo "Tmux section..."
+
+echo "Install Tmux Plugin Manager..."
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 
 echo "Restoration Completed!"
