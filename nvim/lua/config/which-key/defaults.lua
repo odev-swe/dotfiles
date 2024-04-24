@@ -100,6 +100,12 @@ return {
     S = { "<cmd>Telescope git_stash<cr>", "Git stash" },
     e = { "<cmd>Telescope frecency<cr>", "Frecency" },
     b = { "<cmd>Telescope buffers<cr>", "Buffers" },
+    s = {
+      name = "Screen Management",
+      v = { "<C-w>v", "Screen Vertical"},
+      h = { "<C-w>h", "Screen horizontal"},
+      x = { ":close<CR>", "Screen close"},
+    },
     d = {
       name = "+DAP",
       c = { "<cmd>Telescope dap commands<cr>", "Dap Commands" },
