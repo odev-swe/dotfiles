@@ -40,6 +40,14 @@ formulae=(git go nvm ripgrep gh nvim)
 zshStuff=("zsh-completions" "zsh-autosuggestions" "zsh-syntax-highlighting" "powerlevel10k" "font-ha
 rm -rf ~/temp/ck-nerd-font" "jq" "z")
 
+for formulae in "${formulae[@]}"; do
+  brew install "$formulae"
+done
+
+for zsh in "${zshStuff[@]}"; do
+  brew install "$zsh"
+done
+
 echo "Clone dotfiles section..."
 
 # Clone dotfiles repository if it doesn't exist
