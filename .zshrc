@@ -24,14 +24,15 @@ fi
 
 # zsh plugins
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
     source /home/linuxbrew/.linuxbrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
     source /home/linuxbrew/.linuxbrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-    source /home/linuxbrew/.linuxbrew/opt/z/etc/profile.d/
+    source /home/linuxbrew/.linuxbrew/opt/z/etc/profile.d/z.sh
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
     source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
     source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-    source /opt/homebrew/etc/profile.d/
+    source /opt/homebrew/etc/profile.d/z.sh
 fi
 
 
