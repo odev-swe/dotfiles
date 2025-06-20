@@ -1,0 +1,21 @@
+#!/bin/bash
+set -e
+
+# This script installs AUR packages using yay on Arch Linux.
+
+# Check if running on Arch Linux
+if [ ! -f /etc/arch-release ]; then
+  echo "Error: This script is intended for Arch Linux systems only." >&2
+  exit 1
+fi
+
+if ! command -v yay >/dev/null 2>&1; then
+  echo "Error: yay is not installed." >&2
+  exit 1
+fi
+
+PACKAGE=visual-studio-code-bin
+
+echo "Installing $PACKAGE with yay..."
+yay -Sy --noconfirm "$PACKAGE"
+echo "AUR package installation complete."

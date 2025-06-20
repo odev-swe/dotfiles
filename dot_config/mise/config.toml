@@ -1,0 +1,11 @@
+[tools]
+fzf = "latest"
+lsd = "latest"
+ripgrep = "latest"
+neovim = "latest"
+lazygit = "latest"
+usage = "latest"
+go = "latest"
+opentofu = "latest"
+kubectl = "latest"
+awscli = "latest"

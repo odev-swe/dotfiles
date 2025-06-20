@@ -1,0 +1,43 @@
+# ─── PATH SETUP ─────────────────────────────────────────────────────
+export PATH="$HOME/.local/bin:$PATH"
+
+# ─── BASH HISTORY ───────────────────────────────────────────────────
+shopt -s histappend
+export HISTTIMEFORMAT='%F %T '
+export HISTSIZE=100000
+export HISTFILESIZE=100000
+export HISTCONTROL=ignoredups:erasedups
+export HISTIGNORE='ls:ll:bg:fg:history:clear'
+PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+
+# ─── BASH COMPLETION ────────────────────────────────────────────────
+[ -f /usr/share/bash-completion/bash_completion ] && source /usr/share/bash-completion/bash_completion
+
+# ─── mise (Version Manager) ─────────────────────────────────────────
+if command -v mise >/dev/null; then
+    source <(mise completion bash)
+    eval "$(mise activate bash)"
+fi
+
+# ─── kubectl (Kubernetes CLI) ───────────────────────────────────────
+if command -v kubectl >/dev/null; then
+    source <(kubectl completion bash)
+    alias k=kubectl
+    complete -F __start_kubectl k
+fi
+
+# ─── ALIASES ────────────────────────────────────────────────────────
+alias ll='ls -lah'
+alias gs='git status'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias tf='opentofu'
+alias s='source ~/.bashrc'
+alias cm="chezmoi"
+
+# ─── GIT BRANCH IN PROMPT ───────────────────────────────────────────
+parse_git_branch() { git rev-parse --abbrev-ref HEAD 2>/dev/null; }
+export PS1="\[\e[32m\]\u@\h:\w\[\e[33m\]\$(parse_git_branch)\[\e[0m\] \$ "
+
+# ─── SSH AGENT ─────────────────────────────────────────────────────
+eval "$(ssh-agent -s)" > /dev/null
