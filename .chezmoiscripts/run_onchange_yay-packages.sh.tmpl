@@ -14,8 +14,15 @@ if ! command -v yay >/dev/null 2>&1; then
   exit 0
 fi
 
-PACKAGE=visual-studio-code-bin
+PACKAGES=(visual-studio-code-bin larksuite-bin lens-bin)
 
-echo "Installing $PACKAGE with yay..."
-yay -Sy --noconfirm "$PACKAGE"
+for pkg in "${PACKAGES[@]}"; do
+    if yay -Qi "$pkg" >/dev/null 2>&1; then
+        echo "$pkg is already installed. Skipping."
+    else
+        echo "Installing $pkg with yay..."
+        yay -Sy --noconfirm "$pkg"
+    fi
+done
+
 echo "AUR package installation complete."

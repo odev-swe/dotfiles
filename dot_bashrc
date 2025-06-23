@@ -23,6 +23,11 @@ if command -v mise &>/dev/null; then
     eval "$(mise activate bash)"
 fi
 
+# zoxide
+if command -v zoxide &>/dev/null; then
+    eval "$(zoxide init bash)"
+fi
+
 # ─── kubectl (Kubernetes CLI) ───────────────────────────────────────
 if command -v kubectl &>/dev/null; then
     source <(kubectl completion bash)
