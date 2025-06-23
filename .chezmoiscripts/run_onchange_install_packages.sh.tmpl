@@ -10,8 +10,8 @@ if [ -f /etc/arch-release ]; then
   PACKAGES=(git tmux htop curl zsh base-devel dnsutils inetutils bash-completion)
 elif [ -f /etc/lsb-release ] && grep -qi ubuntu /etc/lsb-release; then
   OS="ubuntu"
-  INSTALL_CMD="sudo apt-get update && sudo apt-get install -y"
-  PACKAGES=(git tmux htop curl zsh build-essential dnsutils)
+  INSTALL_CMD="sudo apt install -y"
+  PACKAGES=(git tmux htop curl zsh build-essential dnsutils zoxide jq)
 else
   echo "Error: This script supports only Arch Linux and Ubuntu." >&2
   exit 1
@@ -19,5 +19,8 @@ fi
 
 echo "Detected OS: $OS"
 echo "Installing packages: ${PACKAGES[*]}"
+if [ "$OS" = "ubuntu" ]; then
+  sudo apt update
+fi
 $INSTALL_CMD "${PACKAGES[@]}"
 echo "Package installation complete."

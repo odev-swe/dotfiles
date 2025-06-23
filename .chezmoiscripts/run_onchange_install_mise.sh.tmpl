@@ -7,6 +7,9 @@ MISE_CONFIG="$HOME/.config/mise/config.toml"
 
 if [ ! -x "$MISE_BIN" ]; then
   echo "Error: mise is not installed at $MISE_BIN" >&2
+  # install mise if not present
+  echo "Installing mise..."
+  curl https://mise.run | sh
   exit 1
 fi
 
@@ -14,7 +17,7 @@ set -e
 
 echo "Trusting mise config at $MISE_CONFIG..."
 $MISE_BIN trust "$MISE_CONFIG"
-echo "Installing mise environments..."
+echo "Installing mise environments...."
 $MISE_BIN install
 
 echo "mise installation complete."

@@ -35,6 +35,8 @@ if ! pgrep -u "$USER" ssh-agent >/dev/null; then
     eval "$(ssh-agent -s)" > /dev/null
 fi
 
+eval "$(zoxide init bash)"
+
 # ─── ALIASES ────────────────────────────────────────────────────────
 alias ll='ls -lah'
 alias gs='git status'
