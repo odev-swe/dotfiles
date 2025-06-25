@@ -1,16 +1,13 @@
 #!/bin/bash
 set -e
 
-# This script installs essential packages using the appropriate package manager for Arch Linux or Ubuntu.
-
-# Detect OS and set package manager and package list
 if [ -f /etc/arch-release ]; then
   OS="arch"
   INSTALL_CMD="sudo pacman -Sy --noconfirm"
   PACKAGES=(git tmux htop curl zsh base-devel dnsutils inetutils bash-completion openfortivpn jq fcitx5-im fcitx5-chinese-addons fcitx5-configtool adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts noto-fonts-cjk wqy-microhei wqy-microhei-lite wqy-bitmapfont wqy-zenhei ttf-arphic-ukai ttf-arphic-uming ansible zoxide helm)
 elif [ -f /etc/lsb-release ] && grep -qi ubuntu /etc/lsb-release; then
   OS="ubuntu"
-  INSTALL_CMD="sudo apt-get update && sudo apt-get install -y"
+  INSTALL_CMD="sudo apt-get install -y"
   PACKAGES=(git tmux htop curl zsh build-essential dnsutils jq)
 else
   echo "Error: This script supports only Arch Linux and Ubuntu." >&2
@@ -19,8 +16,11 @@ fi
 
 echo "Detected OS: $OS"
 echo "Installing packages: ${PACKAGES[*]}"
+
 if [ "$OS" = "ubuntu" ]; then
-  sudo apt update
+  sudo apt-get update
 fi
+
 $INSTALL_CMD "${PACKAGES[@]}"
+
 echo "Package installation complete."
