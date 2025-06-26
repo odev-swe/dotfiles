@@ -15,7 +15,6 @@ PROMPT_COMMAND="history -a; history -r; $PROMPT_COMMAND"
 # ─── BASH COMPLETION ────────────────────────────────────────────────
 if [[ -f /usr/share/bash-completion/bash_completion ]]; then
     source /usr/share/bash-completion/bash_completion
-    . /etc/bash_completion
 fi
 
 # ─── mise (Version Manager) ─────────────────────────────────────────
