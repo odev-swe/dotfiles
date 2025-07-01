@@ -37,7 +37,14 @@ fi
 
 # ─── SSH AGENT ──────────────────────────────────────────────────────
 if ! pgrep -u "$USER" ssh-agent >/dev/null; then
-    eval "$(ssh-agent -s)" > /dev/null
+    eval "$(ssh-agent -s)" >/dev/null
+fi
+
+# Add SSH keys if not already added
+if ! ssh-add -l &>/dev/null; then
+    for key in ~/.ssh/gitlab ~/.ssh/github; do
+        [[ -f "$key" ]] && ssh-add "$key" &>/dev/null
+    done
 fi
 
 eval "$(zoxide init bash)"

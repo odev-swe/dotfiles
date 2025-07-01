@@ -14,7 +14,7 @@ if ! command -v yay >/dev/null 2>&1; then
   exit 0
 fi
 
-PACKAGES=(visual-studio-code-bin larksuite-bin lens-bin pgadmin4-desktop dbeaver-ee)
+PACKAGES=(visual-studio-code-bin larksuite-bin lens-bin dbeaver-ee)
 
 for pkg in "${PACKAGES[@]}"; do
     if yay -Qi "$pkg" >/dev/null 2>&1; then
