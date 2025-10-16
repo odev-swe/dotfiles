@@ -1,0 +1,7 @@
+[tools]
+aws-cli = "latest"
+helm = "latest"
+helm-diff = "latest"
+kubectl = "latest"
+bitwarden = "latest"
+jq = "latest"
