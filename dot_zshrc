@@ -53,6 +53,11 @@ if command -v kubectl &>/dev/null; then
     compdef __start_kubectl k
 fi
 
+# Flux completion
+if command -v flux &>/dev/null; then
+    source <(flux completion zsh)
+fi
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
