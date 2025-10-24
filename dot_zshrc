@@ -9,6 +9,7 @@ if [ ! -d "$ZINIT_HOME" ]; then
 fi
 
 # Source/Load zinit
+eval "$(mise activate zsh)"
 source "${ZINIT_HOME}/zinit.zsh"
 
 # Add in Powerlevel10k
@@ -189,5 +190,5 @@ ssh-add ~/.ssh/gitlab 2>/dev/null
 
 # Shell integrations
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-eval "$(mise activate zsh)"
 eval "$(zoxide init --cmd cd zsh)"
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
