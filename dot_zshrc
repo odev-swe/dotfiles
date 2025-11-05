@@ -183,6 +183,8 @@ alias mkdir='mkdir -pv'
 alias df='df -h'
 alias du='du -h'
 alias free='free -h'
+alias debug='kubectl apply -f ~/k8s/debug-pod.yaml'
+alias undebug='kubectl delete -f ~/k8s/debug-pod.yaml'
 
 # Safety
 alias rm='rm -i'
