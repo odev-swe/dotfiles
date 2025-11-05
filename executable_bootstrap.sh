@@ -71,6 +71,10 @@ if [ "$DISTRO" = "arch" ]; then
     "mise"
     "zoxide"
     "yq"
+    "visual-studio-code-bin"
+    "lens-bin"
+    "openfortivpn-git"
+    "larksuite-bin"
   )
   
   AUR_HELPER="yay"
