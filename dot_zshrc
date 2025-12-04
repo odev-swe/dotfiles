@@ -192,6 +192,8 @@ alias du='du -h'
 alias free='free -h'
 alias debug='kubectl apply -f ~/k8s/debug-pod.yaml'
 alias undebug='kubectl delete -f ~/k8s/debug-pod.yaml'
+alias awslogin='cd ~ && cd aws_sso && bash aws_sso.sh'
+alias zshs='source ~/.zshrc'
 
 # Safety
 alias rm='rm -i'
@@ -201,6 +203,9 @@ alias mv='mv -i'
 eval "$(ssh-agent -s)" > /dev/null
 ssh-add ~/.ssh/github 2>/dev/null
 ssh-add ~/.ssh/gitlab 2>/dev/null
+
+export PATH="$(mise where go)/bin:$PATH"
+export PATH=~/.local/share/mise/installs/go/1.25.5/bin:$PATH
 
 # Shell integrations
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
