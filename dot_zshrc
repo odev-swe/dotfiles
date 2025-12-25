@@ -153,3 +153,16 @@ alias ca="chezmoi apply --force --verbose && source ~/.zshrc"
 bw_unlock() {
   export BW_SESSION="$(bw unlock --raw)"
 }
+full_update() {
+  # Ubutu or mac system update
+if [[ "$(uname -s)" == "Darwin" ]]; then
+    softwareupdate --install --all
+    elif [[ -f "/etc/debian_version" ]]; then
+    sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
+    elif [[ -f "/etc/redhat-release" ]]; then
+    sudo dnf upgrade --refresh -y && sudo dnf autoremove -y
+fi
+  brew update && brew upgrade && brew cleanup
+  mise upgrade
+  chezmoi update
+}
