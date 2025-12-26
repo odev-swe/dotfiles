@@ -1,0 +1,3 @@
+{{- $jsonStr := (output "bash" "-c" "bw get item 'openfortivpn' || echo '{}'") -}}
+{{- $json := $jsonStr | fromJson -}}
+{{ $json.notes }}

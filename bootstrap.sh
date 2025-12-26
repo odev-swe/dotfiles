@@ -59,6 +59,7 @@ BREW_PACKAGES=(
   "yq"
   "jq"
   "gcc"
+  "openfortivpn"
 )
 
 for pkg in "${BREW_PACKAGES[@]}"; do

@@ -164,5 +164,11 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
 fi
   brew update && brew upgrade && brew cleanup
   mise upgrade
-  chezmoi update
+  chezmoi upgrade
+}
+vpn() {
+  sudo /home/linuxbrew/.linuxbrew/bin/openfortivpn -c ~/.config/openfortivpn/config
+}
+awslogin() {
+  bash $HOME/Documents/workspace/devops/aws_sso/aws_sso.sh
 }
