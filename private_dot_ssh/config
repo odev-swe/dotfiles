@@ -4,7 +4,7 @@ Host github.com
   IdentityFile ~/.ssh/github
   IdentitiesOnly yes
 
-Host gitlab.risk-vantagefx.com/
+Host gitlab.risk-vantagefx.com
   HostName gitlab.risk-vantagefx.com
   User git
   IdentityFile ~/.ssh/gitlab

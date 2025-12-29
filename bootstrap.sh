@@ -9,15 +9,18 @@ echo "🚀 Starting system bootstrap..."
 # --- Detect OS ---
 OS="$(uname -s)"
 case "$OS" in
-  Linux*)  
+  Linux*)
     PLATFORM="linux"
     echo "🧠 Detected platform: $PLATFORM"
     ;;
-  Darwin*) 
+  Darwin*)
     PLATFORM="macos"
     echo "🧠 Detected platform: $PLATFORM"
     ;;
-  *)       echo "❌ Unsupported OS: $OS" && exit 1 ;;
+  *)
+    echo "❌ Unsupported OS: $OS"
+    exit 1
+    ;;
 esac
 
 # --- Install Git if missing ---
@@ -32,7 +35,6 @@ if ! command -v git &>/dev/null; then
 else
   echo "✓ Git already installed"
 fi
-
 
 # --- Install Homebrew if missing ---
 if ! command -v brew &>/dev/null; then
@@ -58,8 +60,8 @@ BREW_PACKAGES=(
   "fzf"
   "yq"
   "jq"
-  "gcc"
   "openfortivpn"
+  "unzip"
 )
 
 for pkg in "${BREW_PACKAGES[@]}"; do
@@ -71,6 +73,18 @@ for pkg in "${BREW_PACKAGES[@]}"; do
   fi
 done
 
+# --- Install mise if missing ---
+eval "$(mise activate bash)"
+mise install
+
+# --- Bitwarden login ---
+bw login --check &>/dev/null || {
+  echo "🔐 Please log in to Bitwarden:"
+  bw login
+}
+
+export BW_SESSION="$(bw unlock --raw)"
+
 # --- Clone and apply dotfiles ---
 if [ ! -d "$HOME/.local/share/chezmoi" ]; then
   echo "📦 Initializing chezmoi with dotfiles repo..."
@@ -80,7 +94,7 @@ else
 fi
 
 echo "⚙️  Applying chezmoi configuration..."
-chezmoi apply -v
+chezmoi apply -v --force
 
 # --- oh-my-zsh installation ---
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
