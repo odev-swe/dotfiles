@@ -42,8 +42,6 @@ chezmoi apply
 
 > ⚠️ **Warning**: This will overwrite your existing configs. Make backups unless you like living dangerously.
 
-![This is fine](https://i.imgflip.com/2/2fqdr7.jpg)
-
 ## 🔑 Bitwarden Setup
 
 The SSH keys are stored in Bitwarden because I learned the hard way that Git repos and private keys don't mix well.
@@ -94,8 +92,6 @@ A: Don't define both an alias AND a function with the same name. Pick one.
 **Q: Why are there memes in this README?**  
 A: Because maintaining dotfiles without humor leads to madness.
 
-![Suffering from success - DJ Khaled](https://i.imgflip.com/2/2fvqmr.jpg)
-
 ## 📝 License
 
 MIT or whatever. Do what you want, I'm not your mom.
@@ -105,7 +101,5 @@ MIT or whatever. Do what you want, I'm not your mom.
 <div align="center">
 
 *Made with ☕, 😤, and a questionable amount of procrastination*
-
-![They don't know I spent 3 hours configuring my dotfiles instead of working](https://i.imgflip.com/2/3sijzd.jpg)
 
 </div>
