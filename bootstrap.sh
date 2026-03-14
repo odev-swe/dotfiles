@@ -65,7 +65,7 @@ BREW_PACKAGES=(
   "openfortivpn"
   "unzip"
 )
-aws_sso
+
 for pkg in "${BREW_PACKAGES[@]}"; do
   if ! command -v "$pkg" &>/dev/null; then
     echo "  → Installing $pkg..."
