@@ -1,105 +1,126 @@
-# 🏠 dotfiles
+# dotfiles
 
-> *"It works on my machine!"* — Famous last words before discovering your dotfiles are completely broken
+Personal dotfiles managed with [chezmoi](https://www.chezmoi.io/). Supports **macOS** (Apple Silicon + Intel) and **Ubuntu/Debian** Linux.
 
-<div align="center">
-
-```
-   ___      _    __ _ _           
-  |   \ ___| |_ / _(_) |___ ___   
-  | |) / _ \  _|  _| | / -_|_-<   
-  |___/\___/\__|_| |_|_\___/__/   
-                                  
-```
-
-</div>
-
-## 📋 What's This?
-
-My personal dotfiles managed with [chezmoi](https://www.chezmoi.io/) because I got tired of manually copying config files between machines like a caveman.
-
-![It's not much but it's honest work](https://i.imgflip.com/2/2h6pgx.jpg)
-
-## ✨ Features
-
-- 🔐 **Bitwarden integration** - Because storing SSH keys in plaintext is *so* 2010
-- 🛠️ **mise for tool management** - One config to rule them all
-- 🐚 **ZSH configuration** - With aliases that definitely make sense to future me
-- 📦 **Bootstrap script** - From zero to hero in one command (allegedly)
-
-## 🚀 Installation
-
-```bash
-# Clone this bad boy
-chezmoi init https://github.com/yourusername/dotfiles.git
-
-# Apply the configs (what could go wrong?)
-chezmoi apply
-
-# Run bootstrap if you're feeling brave
-./bootstrap.sh
-```
-
-> ⚠️ **Warning**: This will overwrite your existing configs. Make backups unless you like living dangerously.
-
-## 🔑 Bitwarden Setup
-
-The SSH keys are stored in Bitwarden because I learned the hard way that Git repos and private keys don't mix well.
-
-```bash
-# Unlock Bitwarden
-bw-unlock
-
-# Sync your vault
-bw sync
-
-# Now chezmoi can pull your secrets
-chezmoi apply
-```
-
-## 📁 Structure
-
-```
-~/.local/share/chezmoi/
-├── dot_zshrc                  # ZSH configuration
-├── bootstrap.sh               # Setup script
-├── private_dot_ssh/           # SSH configs
-│   └── private_github.tmpl    # GitHub SSH key (from Bitwarden)
-└── private_dot_config/        # Various configs
-    └── mise/
-        └── config.toml        # mise tool versions
-```
-
-## 🎨 Customization
-
-Feel free to fork and modify. Just remember:
-
-> *"Good artists copy, great artists steal, but the best artists properly attribute their dotfiles sources in the README."*
-> 
-> — Abraham Lincoln (probably)
-
-## 🐛 Troubleshooting
-
-**Q: It doesn't work!**  
-A: Have you tried turning it off and on again?
-
-**Q: Bitwarden says "Error parsing encoded request data"**  
-A: Use `output` not `exec` in your chezmoi templates, rookie mistake.
-
-**Q: ZSH parse error about `bw-unlock`**  
-A: Don't define both an alias AND a function with the same name. Pick one.
-
-**Q: Why are there memes in this README?**  
-A: Because maintaining dotfiles without humor leads to madness.
-
-## 📝 License
-
-MIT or whatever. Do what you want, I'm not your mom.
+Secrets (SSH keys, VPN config) are stored in Bitwarden and injected at apply time via chezmoi templates — no plaintext credentials in the repo.
 
 ---
 
-<div align="center">
+## Prerequisites
 
-*Made with ☕, 😤, and a questionable amount of procrastination*
+- A Bitwarden account with the required vault items (see [Bitwarden Setup](#bitwarden-setup))
+- `curl` and `bash` (present on all supported platforms)
 
-</div>
+---
+
+## Quick Start
+
+On a fresh machine, run the bootstrap script directly:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/odev-swe/dotfiles/main/bootstrap.sh)
+```
+
+Or if you've already cloned the repo:
+
+```bash
+./bootstrap.sh
+```
+
+### What bootstrap does
+
+1. Installs **Git** (via apt on Linux, Xcode CLI tools on macOS)
+2. Installs **Homebrew** (handles Linux, Apple Silicon, and Intel Mac paths)
+3. Installs core tools via Homebrew: `chezmoi`, `mise`, `zoxide`, `fzf`, `yq`, `jq`, `openfortivpn`, `unzip`, `bitwarden-cli`, `claude-code`
+4. Prompts for **Bitwarden** login and unlocks the vault
+5. Initialises and applies **chezmoi** (deploys all dotfiles, renders secret templates)
+6. Runs **`mise install`** to install all tool versions from `config.toml`
+7. Installs **oh-my-zsh**, **Powerlevel10k** theme, and **JetBrains Mono Nerd Font**
+
+---
+
+## Bitwarden Setup
+
+Three vault items are required. Each must have its secret content stored in the **Notes** field:
+
+| Item name      | Deployed to                        | Contents              |
+|----------------|------------------------------------|-----------------------|
+| `github-ssh`   | `~/.ssh/github`                    | GitHub private key    |
+| `gitlab-ssh`   | `~/.ssh/gitlab`                    | GitLab private key    |
+| `openfortivpn` | `~/.config/openfortivpn/config`    | openfortivpn config   |
+
+To re-unlock the vault in an existing session:
+
+```bash
+bw_unlock   # sets BW_SESSION, then run: chezmoi apply
+```
+
+---
+
+## Repository Structure
+
+```
+~/.local/share/chezmoi/
+├── .chezmoiignore                     # Files excluded from chezmoi apply
+├── bootstrap.sh                       # One-time machine setup script
+├── dot_zshrc                          # → ~/.zshrc
+├── private_dot_config/
+│   ├── mise/
+│   │   └── config.toml                # → ~/.config/mise/config.toml
+│   └── openfortivpn/
+│       └── config.tmpl                # → ~/.config/openfortivpn/config (Bitwarden)
+└── private_dot_ssh/
+    ├── config                         # → ~/.ssh/config
+    ├── private_github.tmpl            # → ~/.ssh/github (Bitwarden)
+    └── private_gitlab.tmpl            # → ~/.ssh/gitlab (Bitwarden)
+```
+
+---
+
+## Shell Environment
+
+The `.zshrc` is built around:
+
+- **[zinit](https://github.com/zdharma-continuum/zinit)** — plugin manager (auto-installs on first shell load)
+- **[Powerlevel10k](https://github.com/romkatv/powerlevel10k)** — prompt theme with instant prompt enabled
+- **[mise](https://mise.jdx.dev/)** — runtime version manager
+- **[zoxide](https://github.com/ajeetdsouza/zoxide)** — replaces `cd` with frecency-based navigation
+- **[fzf-tab](https://github.com/Aloxaf/fzf-tab)** — fuzzy completion with fzf
+
+Loaded OMZ plugins: `git`, `sudo`, `aws`, `kubectl`, `kubectx`, `helm`, `fluxcd`, `command-not-found`
+
+---
+
+## Managed Tools (mise)
+
+Defined in `private_dot_config/mise/config.toml`:
+
+| Tool | Version |
+|------|---------|
+| go | 1.25.5 |
+| gitversion | 5.12.0 |
+| aws-cli, helm, helm-diff, kubectl, opentofu, flux2, k9s | latest |
+| air, k6, golangci-lint, neovim, node, java, pnpm | latest |
+| firebase, stripe, gomigrate, gitleaks, bitwarden | latest |
+
+Run `mise install` after any changes to `config.toml`.
+
+---
+
+## Daily Usage
+
+| Command | Description |
+|---------|-------------|
+| `ca` | `chezmoi apply --force --verbose && source ~/.zshrc` |
+| `chezmoi diff` | Preview changes before applying |
+| `chezmoi status` | Show which managed files have changed |
+| `chezmoi edit ~/.zshrc` | Edit source file and apply |
+| `bw_unlock` | Unlock Bitwarden vault (required for template re-renders) |
+| `vpn` | Connect via openfortivpn |
+| `full_update` | Update OS packages, Homebrew, mise tools, and chezmoi |
+
+---
+
+## License
+
+MIT

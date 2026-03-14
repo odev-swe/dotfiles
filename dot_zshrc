@@ -37,7 +37,6 @@ zinit light Aloxaf/fzf-tab
 zinit snippet OMZL::git.zsh
 zinit snippet OMZP::git
 zinit snippet OMZP::sudo
-zinit snippet OMZP::archlinux
 zinit snippet OMZP::aws
 zinit snippet OMZP::kubectl
 zinit snippet OMZP::kubectx
@@ -79,7 +78,6 @@ bindkey '^?'      backward-delete-char  # Backspace
 HISTSIZE=5000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
-HISTDUP=erase
 
 setopt appendhistory
 setopt sharehistory
@@ -167,7 +165,7 @@ fi
   chezmoi upgrade
 }
 vpn() {
-  sudo /home/linuxbrew/.linuxbrew/bin/openfortivpn -c ~/.config/openfortivpn/config
+  sudo "$(command -v openfortivpn)" -c ~/.config/openfortivpn/config
 }
 awslogin() {
   bash $HOME/Documents/workspace/devops/aws_sso/aws_sso.sh

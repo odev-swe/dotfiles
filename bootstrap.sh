@@ -40,12 +40,14 @@ fi
 if ! command -v brew &>/dev/null; then
   echo "🍺 Installing Homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  
-  # Set up Homebrew in PATH
-  if [ "$PLATFORM" = "linux" ]; then
+
+  # Set up Homebrew in PATH (covers Linux, Apple Silicon, and Intel Mac)
+  if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-  else
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif [ -f "/opt/homebrew/bin/brew" ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"     # Apple Silicon
+  elif [ -f "/usr/local/bin/brew" ]; then
+    eval "$(/usr/local/bin/brew shellenv)"         # Intel Mac
   fi
 else
   echo "✓ Homebrew already installed"
@@ -63,7 +65,7 @@ BREW_PACKAGES=(
   "openfortivpn"
   "unzip"
 )
-
+aws_sso
 for pkg in "${BREW_PACKAGES[@]}"; do
   if ! command -v "$pkg" &>/dev/null; then
     echo "  → Installing $pkg..."
@@ -73,9 +75,19 @@ for pkg in "${BREW_PACKAGES[@]}"; do
   fi
 done
 
-# --- Install mise if missing ---
-eval "$(mise activate bash)"
-mise install
+echo "Installing claude code..."
+if ! command -v claude &>/dev/null; then
+  brew install --cask claude-code
+else  echo "  ✓ claude code already installed"
+fi
+
+# bitwarden-cli installs as 'bw', not 'bitwarden-cli'
+if ! command -v bw &>/dev/null; then
+  echo "  → Installing bitwarden-cli..."
+  brew install bitwarden-cli
+else
+  echo "  ✓ bitwarden-cli already installed"
+fi
 
 # --- Bitwarden login ---
 bw login --check &>/dev/null || {
@@ -95,6 +107,10 @@ fi
 
 echo "⚙️  Applying chezmoi configuration..."
 chezmoi apply -v --force
+
+# --- Install mise tools (requires ~/.config/mise/config.toml from chezmoi) ---
+eval "$(mise activate bash)"
+mise install
 
 # --- oh-my-zsh installation ---
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
