@@ -108,6 +108,13 @@ export PATH="$HOME/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 
 # ==============================================================================
+# Claude Configuration
+# ==============================================================================
+export CLAUDE_CODE_USE_BEDROCK=1
+export AWS_REGION="ap-southeast-1"
+export AWS_PROFILE="risk-ai"
+
+# ==============================================================================
 # Homebrew Configuration
 # ==============================================================================
 if [[ -f "/opt/homebrew/bin/brew" ]]; then
@@ -144,6 +151,7 @@ eval "$(zoxide init zsh --cmd cd)"
 # Aliases
 # ==============================================================================
 alias ca="chezmoi apply --force --verbose && source ~/.zshrc"
+alias claude-sync="chezmoi re-add ~/.claude/settings.json ~/.claude/plugins/blocklist.json ~/.claude/plugins/known_marketplaces.json"
 
 # ==============================================================================
 # Functions

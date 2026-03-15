@@ -1,3 +1,17 @@
 README.md
 CLAUDE.md
 bootstrap.sh
+
+# .claude auto-generated/cache dirs — not restored by chezmoi apply
+.claude/history.jsonl
+.claude/cache/**
+.claude/sessions/**
+.claude/session-env/**
+.claude/shell-snapshots/**
+.claude/paste-cache/**
+.claude/stats-cache.json
+.claude/backups/**
+.claude/ide/**
+.claude/plans/**
+.claude/file-history/**
+.claude/plugins/marketplaces/**
