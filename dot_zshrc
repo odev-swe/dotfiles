@@ -111,7 +111,8 @@ export ZSH="$HOME/.oh-my-zsh"
 # Claude Configuration
 # ==============================================================================
 export CLAUDE_CODE_USE_BEDROCK=1
-export AWS_REGION="ap-southeast-1"
+# malaysia region for better latency
+export AWS_REGION="ap-southeast-5"
 export AWS_PROFILE="risk-ai"
 
 # ==============================================================================
@@ -140,7 +141,7 @@ source "$ZSH/oh-my-zsh.sh"
 # ==============================================================================
 # Mise (Runtime Version Manager)
 # ==============================================================================
-eval "$(mise activate zsh)"
+eval "$(mise activate zsh)"ap-southeast-1
 
 # ==============================================================================
 # Zoxide (Smart Directory Jumping)

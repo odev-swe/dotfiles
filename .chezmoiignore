@@ -1,6 +1,8 @@
 README.md
 CLAUDE.md
 bootstrap.sh
+private_dot_config/openfortivpn
+private_dot_config/private_dot_ssh
 
 # .claude auto-generated/cache dirs — not restored by chezmoi apply
 .claude/history.jsonl
