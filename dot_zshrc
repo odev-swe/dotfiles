@@ -53,24 +53,21 @@ zinit cdreplay -q
 # ==============================================================================
 # Keybindings
 # ==============================================================================
-bindkey -e                              # Use emacs key bindings
+bindkey -e
 
-# History navigation
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 
-# Word navigation
-bindkey '^[[1;5C' forward-word          # Ctrl + Right Arrow
-bindkey '^[[1;5D' backward-word         # Ctrl + Left Arrow
-bindkey '^[[1;3C' forward-word          # Alt + Right Arrow
-bindkey '^[[1;3D' backward-word         # Alt + Left Arrow
+bindkey '^[[1;5C' forward-word
+bindkey '^[[1;5D' backward-word
+bindkey '^[[1;3C' forward-word
+bindkey '^[[1;3D' backward-word
 
-# Line editing
-bindkey '^[w'     kill-region           # Alt + w
-bindkey '^[[H'    beginning-of-line     # Home
-bindkey '^[[F'    end-of-line           # End
-bindkey '^[[3~'   delete-char           # Delete
-bindkey '^?'      backward-delete-char  # Backspace
+bindkey '^[w'     kill-region
+bindkey '^[[H'    beginning-of-line
+bindkey '^[[F'    end-of-line
+bindkey '^[[3~'   delete-char
+bindkey '^?'      backward-delete-char
 
 # ==============================================================================
 # History Configuration
@@ -90,16 +87,15 @@ setopt hist_find_no_dups
 # ==============================================================================
 # Completion Styling
 # ==============================================================================
-zstyle ':completion:*'                matcher-list 'm:{a-z}={A-Za-z}'
-zstyle ':completion:*'                list-colors "${(s.:.)LS_COLORS}"
-zstyle ':completion:*'                menu no
-zstyle ':completion:*:descriptions'   format '[%d]'
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':completion:*:git-checkout:*' sort false
 
-# fzf-tab configuration
-zstyle ':fzf-tab:*'                       switch-group ',' '.'
-zstyle ':fzf-tab:complete:cd:*'           fzf-preview 'ls --color $realpath'
-zstyle ':fzf-tab:complete:__zoxide_z:*'   fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:*' switch-group ',' '.'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # ==============================================================================
 # PATH Configuration
@@ -111,7 +107,6 @@ export ZSH="$HOME/.oh-my-zsh"
 # Claude Configuration
 # ==============================================================================
 export CLAUDE_CODE_USE_BEDROCK=1
-# malaysia region for better latency
 export AWS_REGION="ap-southeast-5"
 export AWS_PROFILE="risk-ai"
 
@@ -119,11 +114,11 @@ export AWS_PROFILE="risk-ai"
 # Homebrew Configuration
 # ==============================================================================
 if [[ -f "/opt/homebrew/bin/brew" ]]; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"               # Apple Silicon Mac
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 elif [[ -f "/usr/local/bin/brew" ]]; then
-    eval "$(/usr/local/bin/brew shellenv)"                  # Intel Mac
+    eval "$(/usr/local/bin/brew shellenv)"
 elif [[ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"  # Linux
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
 # ==============================================================================
@@ -135,13 +130,12 @@ source "$ZSH/oh-my-zsh.sh"
 # ==============================================================================
 # Powerlevel10k Configuration
 # ==============================================================================
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # ==============================================================================
 # Mise (Runtime Version Manager)
 # ==============================================================================
-eval "$(mise activate zsh)"ap-southeast-1
+eval "$(mise activate zsh)"
 
 # ==============================================================================
 # Zoxide (Smart Directory Jumping)
@@ -160,22 +154,25 @@ alias claude-sync="chezmoi re-add ~/.claude/settings.json ~/.claude/plugins/bloc
 bw_unlock() {
   export BW_SESSION="$(bw unlock --raw)"
 }
+
 full_update() {
-  # Ubutu or mac system update
-if [[ "$(uname -s)" == "Darwin" ]]; then
+  if [[ "$(uname -s)" == "Darwin" ]]; then
     softwareupdate --install --all
-    elif [[ -f "/etc/debian_version" ]]; then
+  elif [[ -f "/etc/debian_version" ]]; then
     sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
-    elif [[ -f "/etc/redhat-release" ]]; then
+  elif [[ -f "/etc/redhat-release" ]]; then
     sudo dnf upgrade --refresh -y && sudo dnf autoremove -y
-fi
+  fi
+
   brew update && brew upgrade && brew cleanup
   mise upgrade
   chezmoi upgrade
 }
+
 vpn() {
   sudo "$(command -v openfortivpn)" -c ~/.config/openfortivpn/config
 }
+
 awslogin() {
   bash $HOME/Documents/workspace/devops/aws_sso/aws_sso.sh
 }
