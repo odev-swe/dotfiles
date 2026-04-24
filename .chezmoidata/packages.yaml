@@ -13,6 +13,11 @@ packages:
       - kubectl
       - opentofu
       - neovim
+      - k9s
+      - flux
+      - helm
+      - gcc
+      - fluxcd/tap/flux
     linux:
       - openfortivpn
     darwin: []
