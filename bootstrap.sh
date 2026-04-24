@@ -1,4 +1,5 @@
 #!/bin/bash
+
 set -euo pipefail
 
 # --- Variables ---
@@ -46,8 +47,6 @@ if ! command -v brew &>/dev/null; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
   elif [ -f "/opt/homebrew/bin/brew" ]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"     # Apple Silicon
-  elif [ -f "/usr/local/bin/brew" ]; then
-    eval "$(/usr/local/bin/brew shellenv)"         # Intel Mac
   fi
 else
   echo "✓ Homebrew already installed"
@@ -64,6 +63,12 @@ BREW_PACKAGES=(
   "jq"
   "openfortivpn"
   "unzip"
+  "claude-code@latest"
+  "awscli"
+  "bitwarden-cli"
+  "kubectl"
+  "opentofu"
+  "neovim"
 )
 
 for pkg in "${BREW_PACKAGES[@]}"; do
@@ -75,18 +80,39 @@ for pkg in "${BREW_PACKAGES[@]}"; do
   fi
 done
 
-echo "Installing claude code..."
-if ! command -v claude &>/dev/null; then
-  brew install --cask claude-code
-else  echo "  ✓ claude code already installed"
+
+# --- oh-my-zsh installation ---
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+  echo "🌀 Installing oh-my-zsh..."
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+else
+  echo "✓ oh-my-zsh already installed"
 fi
 
-# bitwarden-cli installs as 'bw', not 'bitwarden-cli'
-if ! command -v bw &>/dev/null; then
-  echo "  → Installing bitwarden-cli..."
-  brew install bitwarden-cli
+# --- Powerlevel10k theme ---
+if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" ]; then
+  echo "⚡ Installing Powerlevel10k theme..."
+  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
+    ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 else
-  echo "  ✓ bitwarden-cli already installed"
+  echo "✓ Powerlevel10k already installed"
+fi
+
+# --- Install Nerd Font ---
+FONT="JetBrainsMono Nerd Font"; \
+if fc-list 2>/dev/null | grep -qi "$FONT"; then \
+  echo "✓ $FONT already installed"; \
+elif command -v brew >/dev/null 2>&1; then \
+  brew list --cask font-jetbrains-mono-nerd-font &>/dev/null || brew install --cask font-jetbrains-mono-nerd-font; \
+  echo "✓ $FONT installed via Homebrew"; \
+else \
+  DIR="${XDG_DATA_HOME:-$HOME/.local/share}/fonts"; \
+  mkdir -p "$DIR" && \
+  curl -fsSL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip -o /tmp/jbm.zip && \
+  unzip -oq /tmp/jbm.zip -d "$DIR" && \
+  rm -f /tmp/jbm.zip && \
+  fc-cache -f >/dev/null && \
+  echo "✓ $FONT installed manually"; \
 fi
 
 # --- Bitwarden login ---
@@ -111,47 +137,6 @@ chezmoi apply -v --force
 # --- Install mise tools (requires ~/.config/mise/config.toml from chezmoi) ---
 eval "$(mise activate bash)"
 mise install
-
-# --- oh-my-zsh installation ---
-if [ ! -d "$HOME/.oh-my-zsh" ]; then
-  echo "🌀 Installing oh-my-zsh..."
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-else
-  echo "✓ oh-my-zsh already installed"
-fi
-
-# --- Powerlevel10k theme ---
-if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" ]; then
-  echo "⚡ Installing Powerlevel10k theme..."
-  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
-    ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-else
-  echo "✓ Powerlevel10k already installed"
-fi
-
-# --- JetBrains Mono Nerd Font ---
-echo "🔤 Installing JetBrains Mono Nerd Font..."
-if [ "$PLATFORM" = "macos" ]; then
-  if ! brew list --cask font-jetbrains-mono-nerd-font &>/dev/null; then
-    brew install --cask font-jetbrains-mono-nerd-font
-  else
-    echo "✓ JetBrains Mono Nerd Font already installed"
-  fi
-elif [ "$PLATFORM" = "linux" ]; then
-  FONT_DIR="$HOME/.local/share/fonts"
-  if [ ! -f "$FONT_DIR/JetBrainsMonoNerdFont-Regular.ttf" ]; then
-    mkdir -p "$FONT_DIR"
-    cd /tmp
-    curl -fLo "JetBrainsMono.zip" https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip
-    unzip -o JetBrainsMono.zip -d "$FONT_DIR"
-    rm JetBrainsMono.zip
-    fc-cache -fv
-    cd - > /dev/null
-    echo "✓ JetBrains Mono Nerd Font installed"
-  else
-    echo "✓ JetBrains Mono Nerd Font already installed"
-  fi
-fi
 
 echo ""
 echo "✅ System bootstrap complete!"
