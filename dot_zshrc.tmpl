@@ -139,14 +139,49 @@ eval "$(zoxide init zsh --cmd cd)"
 # ==============================================================================
 # Aliases
 # ==============================================================================
-alias ca='export BW_SESSION="$(bw unlock --raw)" && bw sync --force && chezmoi apply --force --verbose && source ~/.zshrc'
+alias ca='bw_unlock && bw sync --force && chezmoi apply --force --verbose && source ~/.zshrc'
 alias claude-sync='chezmoi re-add'
 
 # ==============================================================================
 # Functions
 # ==============================================================================
+# Unlock Bitwarden only when the current session is missing or locked.
+# The raw session token is cached in $XDG_STATE_HOME/bw/session (mode 0600)
+# so new shells and chezmoi apply runs can reuse it without re-prompting.
 bw_unlock() {
-  export BW_SESSION="$(bw unlock --raw)"
+  local cache="${XDG_STATE_HOME:-$HOME/.local/state}/bw/session"
+
+  _bw_session_valid() {
+    local token="$1"
+    [[ -n "$token" ]] || return 1
+    BW_SESSION="$token" bw status 2>/dev/null | grep -q '"status":"unlocked"'
+  }
+
+  if _bw_session_valid "$BW_SESSION"; then
+    return 0
+  fi
+
+  if [[ -r "$cache" ]]; then
+    local cached
+    cached="$(<"$cache")"
+    if _bw_session_valid "$cached"; then
+      export BW_SESSION="$cached"
+      return 0
+    fi
+  fi
+
+  local token
+  token="$(bw unlock --raw)" || return 1
+  export BW_SESSION="$token"
+
+  mkdir -p "$(dirname "$cache")"
+  ( umask 077 && printf '%s' "$token" > "$cache" )
+}
+
+bw_lock() {
+  bw lock >/dev/null 2>&1 || true
+  unset BW_SESSION
+  rm -f "${XDG_STATE_HOME:-$HOME/.local/state}/bw/session"
 }
 
 full_update() {
