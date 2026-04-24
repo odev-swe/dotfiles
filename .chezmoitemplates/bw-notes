@@ -1,0 +1,2 @@
+{{- /* Usage: {{ template "bw-notes" "item-name" }} — emits the notes field of a Bitwarden item. */ -}}
+{{- (bitwarden "item" .).notes -}}

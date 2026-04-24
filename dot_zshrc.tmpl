@@ -1,21 +1,28 @@
-# Created by newuser for 5.9
-
 # ==============================================================================
 # Powerlevel10k Instant Prompt
 # ==============================================================================
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+
+# ==============================================================================
+# Homebrew (emit only the line matching this machine)
+# ==============================================================================
+{{- if eq .chezmoi.os "darwin" }}
+{{-   if eq .chezmoi.arch "arm64" }}
+eval "$(/opt/homebrew/bin/brew shellenv)"
+{{-   else }}
+eval "$(/usr/local/bin/brew shellenv)"
+{{-   end }}
+{{- else if eq .chezmoi.os "linux" }}
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+{{- end }}
 
 # ==============================================================================
 # Zinit Plugin Manager
 # ==============================================================================
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
-# Download Zinit if not installed
 if [[ ! -d "$ZINIT_HOME" ]]; then
     mkdir -p "$(dirname $ZINIT_HOME)"
     git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
@@ -103,22 +110,11 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 export PATH="$HOME/bin:$PATH"
 
 # ==============================================================================
-# Claude Configuration
+# Claude / AWS Configuration
 # ==============================================================================
 export CLAUDE_CODE_USE_BEDROCK=1
-export AWS_REGION="ap-southeast-5"
-export AWS_PROFILE="risk-ai"
-
-# ==============================================================================
-# Homebrew Configuration
-# ==============================================================================
-if [[ -f "/opt/homebrew/bin/brew" ]]; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-elif [[ -f "/usr/local/bin/brew" ]]; then
-    eval "$(/usr/local/bin/brew shellenv)"
-elif [[ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-fi
+export AWS_REGION={{ .aws.region | quote }}
+export AWS_PROFILE={{ .aws.profile | quote }}
 
 # ==============================================================================
 # Oh My Zsh Configuration
@@ -144,7 +140,7 @@ eval "$(zoxide init zsh --cmd cd)"
 # Aliases
 # ==============================================================================
 alias ca='export BW_SESSION="$(bw unlock --raw)" && bw sync --force && chezmoi apply --force --verbose && source ~/.zshrc'
-alias claude-sync="chezmoi re-add ~/.claude/settings.json ~/.claude/plugins/blocklist.json ~/.claude/plugins/known_marketplaces.json"
+alias claude-sync='chezmoi re-add'
 
 # ==============================================================================
 # Functions
@@ -167,13 +163,11 @@ full_update() {
   chezmoi upgrade
 }
 
+{{- if eq .chezmoi.os "linux" }}
 vpn() {
   sudo "$(command -v openfortivpn)" -c ~/.config/openfortivpn/config
 }
-
-awslogin() {
-  bash $HOME/Documents/workspace/devops/aws_sso/aws_sso.sh
-}
+{{- end }}
 
 export ZSH="$HOME/.oh-my-zsh"
 source $ZSH/oh-my-zsh.sh

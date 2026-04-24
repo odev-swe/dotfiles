@@ -1,10 +1,11 @@
 README.md
 CLAUDE.md
 bootstrap.sh
-private_dot_config/openfortivpn
+
+# Secrets / ssh directory layout inside config is handled elsewhere
 private_dot_config/private_dot_ssh
 
-# .claude auto-generated/cache dirs — not restored by chezmoi apply
+# .claude auto-generated / cache dirs — not restored by chezmoi apply
 .claude/history.jsonl
 .claude/cache/**
 .claude/sessions/**
@@ -17,3 +18,9 @@ private_dot_config/private_dot_ssh
 .claude/plans/**
 .claude/file-history/**
 .claude/plugins/marketplaces/**
+.claude/projects/**
+
+{{- if ne .chezmoi.os "linux" }}
+# Linux-only configs
+private_dot_config/openfortivpn
+{{- end }}

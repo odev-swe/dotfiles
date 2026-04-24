@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Reruns whenever ~/.config/mise/config.toml changes (hash below ties it to the source).
+# mise config hash: {{ include "private_dot_config/mise/config.toml" | sha256sum }}
+set -euo pipefail
+
+command -v mise >/dev/null || { echo "mise not installed; skipping"; exit 0; }
+
+echo "Installing mise-managed tools..."
+mise install

@@ -1,3 +1,1 @@
-{{- $jsonStr := (output "bash" "-c" "bw get item 'gitlab-ssh' || echo '{}'") -}}
-{{- $json := $jsonStr | fromJson -}}
-{{ $json.notes }}
+{{ template "bw-notes" "gitlab-ssh" }}

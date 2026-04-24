@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+FONT="JetBrainsMono Nerd Font"
+
+if command -v fc-list >/dev/null 2>&1 && fc-list | grep -qi "$FONT"; then
+    exit 0
+fi
+
+{{- if eq .chezmoi.os "darwin" }}
+# Cask install is handled by the brew run_onchange script; nothing to do here.
+exit 0
+{{- else }}
+echo "Installing $FONT for the current user..."
+DIR="${XDG_DATA_HOME:-$HOME/.local/share}/fonts"
+mkdir -p "$DIR"
+tmp="$(mktemp -d)"
+trap 'rm -rf "$tmp"' EXIT
+curl -fsSL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip -o "$tmp/jbm.zip"
+unzip -oq "$tmp/jbm.zip" -d "$DIR"
+command -v fc-cache >/dev/null && fc-cache -f >/dev/null || true
+echo "Installed $FONT"
+{{- end }}

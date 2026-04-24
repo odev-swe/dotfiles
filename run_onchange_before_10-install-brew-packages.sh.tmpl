@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# Reruns whenever the package list below changes (chezmoi hashes the file contents).
+set -euo pipefail
+
+command -v brew >/dev/null || { echo "brew not installed; skipping"; exit 0; }
+
+formulae=(
+{{- range .packages.brew.common }}
+    {{ . | quote }}
+{{- end }}
+{{- if eq .chezmoi.os "linux" }}
+{{- range .packages.brew.linux }}
+    {{ . | quote }}
+{{- end }}
+{{- else if eq .chezmoi.os "darwin" }}
+{{- range .packages.brew.darwin }}
+    {{ . | quote }}
+{{- end }}
+{{- end }}
+)
+
+casks=(
+{{- if eq .chezmoi.os "darwin" }}
+{{- range .packages.casks.darwin }}
+    {{ . | quote }}
+{{- end }}
+{{- end }}
+)
+
+echo "Ensuring ${#formulae[@]} brew formulae installed..."
+for pkg in "${formulae[@]}"; do
+    if brew list --formula "$pkg" &>/dev/null; then
+        echo "  ✓ $pkg"
+    else
+        echo "  → installing $pkg"
+        brew install "$pkg"
+    fi
+done
+
+if [ ${#casks[@]} -gt 0 ]; then
+    echo "Ensuring ${#casks[@]} brew casks installed..."
+    for cask in "${casks[@]}"; do
+        if brew list --cask "$cask" &>/dev/null; then
+            echo "  ✓ $cask"
+        else
+            echo "  → installing $cask"
+            brew install --cask "$cask"
+        fi
+    done
+fi

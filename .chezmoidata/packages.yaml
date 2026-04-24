@@ -1,0 +1,21 @@
+packages:
+  brew:
+    common:
+      - chezmoi
+      - mise
+      - zoxide
+      - fzf
+      - yq
+      - jq
+      - unzip
+      - awscli
+      - bitwarden-cli
+      - kubectl
+      - opentofu
+      - neovim
+    linux:
+      - openfortivpn
+    darwin: []
+  casks:
+    darwin:
+      - font-jetbrains-mono-nerd-font

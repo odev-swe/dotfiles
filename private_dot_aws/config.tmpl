@@ -1,3 +1,0 @@
-{{- $jsonStr := (output "bash" "-c" "bw get item 'awsconfig' || echo '{}'") -}}
-{{- $json := $jsonStr | fromJson -}}
-{{ $json.notes }}
