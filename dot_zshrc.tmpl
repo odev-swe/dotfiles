@@ -184,6 +184,18 @@ bw_lock() {
   rm -f "${XDG_STATE_HOME:-$HOME/.local/state}/bw/session"
 }
 
+# Auto-unlock Bitwarden before any chezmoi subcommand that renders templates,
+# so direct `chezmoi apply` (not just the `ca` alias) reuses the cached session
+# instead of prompting per-template.
+chezmoi() {
+  case "${1:-}" in
+    apply|diff|update|init|re-add|verify|merge-all|execute-template)
+      bw_unlock || return $?
+      ;;
+  esac
+  command chezmoi "$@"
+}
+
 full_update() {
   if [[ "$(uname -s)" == "Darwin" ]]; then
     softwareupdate --install --all
