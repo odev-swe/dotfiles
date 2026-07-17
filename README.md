@@ -113,7 +113,7 @@ Defined in `private_dot_config/mise/config.toml`. Run `mise install` after chang
 | `bw_unlock` | Re-export `BW_SESSION` in the current shell |
 | `vpn` | Connect via openfortivpn |
 | `full_update` | Update OS packages, Homebrew, mise tools, chezmoi |
-| `claude-sync` | Re-capture `~/.claude/*` into the source repo |
+| `claude-sync` | `chezmoi re-add` — pull edited managed files back into the source repo |
 
 ---
 
