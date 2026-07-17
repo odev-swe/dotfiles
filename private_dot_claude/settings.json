@@ -1,0 +1,17 @@
+{
+  "env": {
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "global.anthropic.claude-sonnet-4-6"
+  },
+  "model": "global.anthropic.claude-opus-4-8",
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline.sh"
+  },
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true
+  },
+  "effortLevel": "medium",
+  "autoUpdatesChannel": "latest",
+  "theme": "auto",
+  "skipAutoPermissionPrompt": true
+}

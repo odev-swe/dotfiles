@@ -4,3 +4,26 @@ bootstrap.sh
 
 # Secrets / ssh directory layout inside config is handled elsewhere
 private_dot_config/private_dot_ssh
+
+# .claude — track config only; never auth/cache/runtime state
+.claude/history.jsonl
+.claude/cache/**
+.claude/sessions/**
+.claude/session-env/**
+.claude/shell-snapshots/**
+.claude/paste-cache/**
+.claude/downloads/**
+.claude/stats-cache.json
+.claude/backups/**
+.claude/file-history/**
+.claude/plans/**
+.claude/tasks/**
+.claude/projects/**
+.claude/plugins/marketplaces/**
+.claude/plugins/known_marketplaces.json
+.claude/settings.local.json
+.claude/.credentials.json
+.claude/mcp-needs-auth-cache.json
+.claude/remote-settings.json
+.claude/policy-limits.json
+.claude/.last-update-result.json
