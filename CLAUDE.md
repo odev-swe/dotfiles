@@ -66,23 +66,21 @@ Template pattern used throughout:
 
 Uses **zinit** as the plugin manager (auto-installs on first shell load). Plugins loaded:
 - `zsh-syntax-highlighting`, `zsh-completions`, `zsh-autosuggestions`, `fzf-tab`
-- OMZ snippets: git, sudo, archlinux, aws, kubectl, kubectx, helm, fluxcd, command-not-found
+- OMZ snippets: git, aws, kubectl, kubectx, helm, fluxcd
 
-Shell integrations initialized: **Powerlevel10k** (theme), **mise** (`eval "$(mise activate zsh)"`), **zoxide** (replaces `cd`).
+Shell integrations initialized: **Starship** (prompt), **mise** (`eval "$(mise activate zsh)"`), **zoxide** (replaces `cd`), **fzf** (`fzf --zsh` keybindings).
 
 ### Tool Management (`private_dot_config/mise/config.toml`)
 
-mise manages all dev tool versions. Notable pinned versions: `gitversion = "5.12.0"`, `go = "1.25.5"`. All other tools track `latest`. Run `mise install` after applying to install/update tools.
+mise manages all dev tool versions. Notable pinned version: `claude-code = "2.1.206"`. All other tools track `latest`. Run `mise install` after applying to install/update tools.
 
 ### Bootstrap Script (`bootstrap.sh`)
 
-Idempotent setup for a new machine. Order of operations:
-1. Installs Git (apt/xcode-select)
+Idempotent setup for a new machine. Deliberately thin — installs only what chezmoi needs, then hands off. Order of operations:
+1. Installs Git (xcode-select)
 2. Installs Homebrew
-3. Installs Brew packages: chezmoi, mise, zoxide, fzf, yq, jq, openfortivpn, unzip
-4. Activates mise and runs `mise install`
-5. Logs into Bitwarden and exports `BW_SESSION`
-6. Initializes chezmoi from the dotfiles repo and runs `chezmoi apply`
-7. Installs oh-my-zsh (unattended)
-8. Clones Powerlevel10k theme
-9. Installs JetBrains Mono Nerd Font (cask on macOS, manual download on Linux)
+3. Installs `chezmoi` + `bitwarden-cli`
+4. Logs into Bitwarden and exports `BW_SESSION`
+5. Runs `chezmoi init <repo>` → `chezmoi apply`
+
+Everything else runs inside chezmoi via `run_once_`/`run_onchange_` scripts: brew packages/casks (incl. JetBrains Mono Nerd Font) and `mise install`.

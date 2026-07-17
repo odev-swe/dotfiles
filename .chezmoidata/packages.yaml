@@ -1,26 +1,37 @@
 packages:
   brew:
-    common:
-      - chezmoi
-      - mise
-      - zoxide
-      - fzf
-      - yq
-      - jq
-      - unzip
-      - awscli
-      - bitwarden-cli
-      - kubectl
-      - opentofu
-      - neovim
-      - k9s
-      - flux
-      - helm
-      - gcc
-      - fluxcd/tap/flux
-    linux:
-      - openfortivpn
-    darwin: []
+    - chezmoi
+    - mise
+    - zoxide
+    - fzf
+    - bitwarden-cli
+    - zinit
+    - neovim
+    - starship
+    - bat
+    - eza
+    - fd
+    - ripgrep
+    - gh
+    - lazygit
+    - tree
+    - graphviz
+    - ffmpeg
+    - yt-dlp
+    - yazi
+    - yamllint
+    - tree-sitter-cli
+    - kubectx
+    - telnet
+    - openjdk@21
+    - python@3.12
+    - openfortivpn
+    - macmon
+    - nvm
+    - controlplaneio-fluxcd/tap/flux-operator-mcp
   casks:
-    darwin:
-      - font-jetbrains-mono-nerd-font
+    - font-jetbrains-mono-nerd-font
+    - claude
+    - obsidian
+    - spotify
+    - wezterm

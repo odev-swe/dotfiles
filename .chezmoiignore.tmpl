@@ -19,8 +19,3 @@ private_dot_config/private_dot_ssh
 .claude/file-history/**
 .claude/plugins/marketplaces/**
 .claude/projects/**
-
-{{- if ne .chezmoi.os "linux" }}
-# Linux-only configs
-private_dot_config/openfortivpn
-{{- end }}

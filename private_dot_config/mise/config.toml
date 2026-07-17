@@ -1,10 +1,12 @@
 [tools]
-go = "1.25.5"
-air = "latest"
-golangci-lint = "latest"
-node="latest"
-firebase="latest"
-stripe="latest"
-pnpm="latest"
-gomigrate="latest"
-gitleaks="latest"
+aws-cli = { version = "latest", symlink_bins = "true" }
+aws-sam = { version = "latest", symlink_bins = "true" }
+claude-code = "2.1.206"
+flux2 = "latest"
+go = "latest"
+helm = "latest"
+k9s = "latest"
+kubectl = "latest"
+opentofu = "latest"
+rust = "latest"
+stripe = "latest"
