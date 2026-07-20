@@ -22,6 +22,9 @@ packages:
     - yamllint
     - tree-sitter-cli
     - kubectx
+    - docker
+    - docker-compose
+    - colima
     - telnet
     - openjdk@21
     - python@3.12

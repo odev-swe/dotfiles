@@ -162,6 +162,12 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias k='kubectl'
 
+# colima — start VM with tuned resources (M-series / 48GB)
+alias colup='colima start --cpu 6 --memory 12 --disk 100'
+alias coldown='colima stop'
+# deep clean: delete VM + reclaim its disk, then `colup` for a fresh start (prompts to confirm)
+alias colclean='colima stop 2>/dev/null; colima delete'
+
 # Claude Code context functions
 cc() {
   CLAUDE_CODE_USE_BEDROCK=1 AWS_REGION={{ .aws.region | quote }} AWS_PROFILE={{ .aws.profile | quote }} claude "$@"
