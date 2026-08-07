@@ -1,3 +1,7 @@
+[settings]
+# no 24h supply-chain quarantine — take releases the moment they land
+minimum_release_age = "0s"
+
 [tools]
 argocd = "latest"
 aws-cli = { version = "latest", symlink_bins = "true" }
