@@ -1,12 +1,15 @@
 [tools]
+argocd = "latest"
 aws-cli = { version = "latest", symlink_bins = "true" }
 aws-sam = { version = "latest", symlink_bins = "true" }
-claude-code = "2.1.206"
+claude-code = "latest"
+cosign = "latest"
 flux2 = "latest"
 go = "latest"
 helm = "latest"
 k9s = "latest"
 kubectl = "latest"
+liquibase = "latest"
 opentofu = "latest"
 rust = "latest"
 stripe = "latest"

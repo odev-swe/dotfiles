@@ -174,7 +174,7 @@ cc() {
 }
 
 cc-enterprise() {
-  env -u CLAUDE_CODE_USE_BEDROCK -u AWS_REGION -u AWS_PROFILE claude "$@"
+  CLAUDE_CONFIG_DIR="$HOME/.claude-enterprise" env -u CLAUDE_CODE_USE_BEDROCK -u AWS_REGION -u AWS_PROFILE claude "$@"
 }
 
 # ==============================================================================
