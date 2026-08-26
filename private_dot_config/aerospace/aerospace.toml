@@ -1,0 +1,106 @@
+# AeroSpace window manager. Docs: https://nikitabobko.github.io/AeroSpace/guide
+#
+# AeroSpace grabs hotkeys system-wide, so every key bound here is invisible to
+# wezterm, tmux and zsh. Bindings are therefore restricted to alt+digit and
+# alt-hjkl. The upstream default alt-a..alt-z workspace bindings are dropped
+# on purpose: they shadow the zsh Meta layer (alt-b/f/d word ops, alt-n/p
+# history search) and fzf's alt-c widget.
+config-version = 2
+
+start-at-login = true
+auto-reload-config = true
+
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+accordion-padding = 30
+
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+# Keeps each monitor on its own assigned workspace at startup. Without this,
+# AeroSpace invents high-numbered workspaces (10, 11, ...) that no binding
+# below can reach.
+persistent-workspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+
+# 3 workspaces per monitor. Chosen to match the current physical layout, so
+# nothing jumps screens. Unmatched patterns fall back to the main monitor, so
+# this stays correct when the laptop is undocked.
+[workspace-to-monitor-force-assignment]
+    1 = 'built-in'
+    2 = 'built-in'
+    3 = 'built-in'
+    4 = 'LS24D300G'
+    5 = 'LS24D300G'
+    6 = 'LS24D300G'
+    7 = 'LG FULL HD'
+    8 = 'LG FULL HD'
+    9 = 'LG FULL HD'
+
+# Never tile System Settings. A tiling WM that grabs or repositions a macOS
+# permission dialog can get it dismissed, and a dismissed TCC prompt is
+# recorded as a denial — that is how ~/Documents access was silently revoked
+# for wezterm on 2026-08-26.
+[[on-window-detected]]
+if.app-id = 'com.apple.systempreferences'
+run = 'layout floating'
+
+[mode.main.binding]
+
+    # Focus / move. Only zsh casualties: alt-h (run-help), alt-l (down-case-word).
+    alt-h = 'focus left'
+    alt-j = 'focus down'
+    alt-k = 'focus up'
+    alt-l = 'focus right'
+
+    alt-shift-h = 'move left'
+    alt-shift-j = 'move down'
+    alt-shift-k = 'move up'
+    alt-shift-l = 'move right'
+
+    # Layout
+    alt-slash = 'layout tiles horizontal vertical'
+    alt-comma = 'layout accordion horizontal vertical'
+    alt-minus = 'resize smart -50'
+    alt-equal = 'resize smart +50'
+
+    # Workspaces: digits only
+    alt-1 = 'workspace 1'
+    alt-2 = 'workspace 2'
+    alt-3 = 'workspace 3'
+    alt-4 = 'workspace 4'
+    alt-5 = 'workspace 5'
+    alt-6 = 'workspace 6'
+    alt-7 = 'workspace 7'
+    alt-8 = 'workspace 8'
+    alt-9 = 'workspace 9'
+
+    alt-shift-1 = 'move-node-to-workspace 1'
+    alt-shift-2 = 'move-node-to-workspace 2'
+    alt-shift-3 = 'move-node-to-workspace 3'
+    alt-shift-4 = 'move-node-to-workspace 4'
+    alt-shift-5 = 'move-node-to-workspace 5'
+    alt-shift-6 = 'move-node-to-workspace 6'
+    alt-shift-7 = 'move-node-to-workspace 7'
+    alt-shift-8 = 'move-node-to-workspace 8'
+    alt-shift-9 = 'move-node-to-workspace 9'
+
+    alt-tab = 'workspace-back-and-forth'
+
+    # Monitors. alt-shift-comma/period/slash are free everywhere: macOS types
+    # only dead diacritics there, and nothing in zsh/fzf/tmux/wezterm uses them.
+    alt-shift-comma = 'focus-monitor --wrap-around prev'
+    alt-shift-period = 'focus-monitor --wrap-around next'
+    alt-shift-slash = 'move-node-to-monitor --wrap-around --focus-follows-window next'
+    alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+
+    alt-shift-semicolon = 'mode service'
+
+[mode.service.binding]
+    esc = ['reload-config', 'mode main']
+    r = ['flatten-workspace-tree', 'mode main']       # reset layout
+    f = ['layout floating tiling', 'mode main']       # float / tile toggle
+    backspace = ['close-all-windows-but-current', 'mode main']
+
+    alt-shift-h = ['join-with left', 'mode main']
+    alt-shift-j = ['join-with down', 'mode main']
+    alt-shift-k = ['join-with up', 'mode main']
+    alt-shift-l = ['join-with right', 'mode main']

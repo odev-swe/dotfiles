@@ -22,8 +22,7 @@ return {
         graphql = { "prettier" },
         sh = { "shfmt" },
         bash = { "shfmt" },
-        terraform = { "tofu_fmt" }, -- OpenTofu's formatter
-        tf = { "tofu_fmt" },
+        terraform = { "tofu_fmt" }, -- OpenTofu's formatter (.tf and .tofu)
       },
       format_on_save = {
         lsp_fallback = true, -- fall back to LSP formatting if no formatter set

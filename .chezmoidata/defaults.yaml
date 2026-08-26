@@ -1,7 +1,7 @@
 # Default values — overridden per-machine via prompts in .chezmoi.toml.tmpl.
 aws:
   profile: risk-ai
-  region: ap-southeast-5
+  region: us-east-2
 
 name: odev
 email: odev@example.com

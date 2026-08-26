@@ -1,9 +1,22 @@
 {
   "env": {
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "global.anthropic.claude-sonnet-4-6",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "global.anthropic.claude-sonnet-5",
     "ANTHROPIC_DEFAULT_OPUS_MODEL": "global.anthropic.claude-opus-5[1m]"
   },
   "model": "opus[1m]",
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.message // \"Waiting on you\"' | { read -r m; osascript -e 'on run argv' -e 'display notification (item 1 of argv) with title \"Claude Code\" sound name \"Ping\"' -e 'end run' \"$m\"; }",
+            "async": true
+          }
+        ]
+      }
+    ]
+  },
   "statusLine": {
     "type": "command",
     "command": "bash ~/.claude/statusline.sh"
