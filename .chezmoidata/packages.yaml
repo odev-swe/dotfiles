@@ -33,10 +33,12 @@ packages:
     - macmon
     - nvm
     - controlplaneio-fluxcd/tap/flux-operator-mcp
+    - bjarneo/cliamp/cliamp
   casks:
     - font-jetbrains-mono-nerd-font
     - claude
     - obsidian
     - spotify
     - wezterm
+    - visual-studio-code
     - nikitabobko/tap/aerospace
